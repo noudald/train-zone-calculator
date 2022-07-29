@@ -20,25 +20,34 @@
     </head>
     <body>
 
-        <input type="number" id="ftp" placeholder='ftp' size=20 />
-        <input type="number" id="hr" placeholder='hartslag' size=20 />
-        <input type="number" id="weight" placeholder='gewicht (kg)' size=20 />
+        <input type="number" id="ftp" placeholder='FTP' size=13 />
+        <input type="number" id="hr" placeholder='FTP Heart Rate' size=13 />
+        <input type="number" id="weight" placeholder='Weight (kg)' size=13 />
+        <select id="gender">
+            <option value="" disabled selected>Select your option</option>
+            <option value="female">female</option>
+            <option value="male">male</option>
+            <option value="other">other</option>
+        </select>
+
+        <p id="physicalCondition"></p>
+
         <table id='ftpTable'>
             <tr>
-                <th>Trainingzone</th>
-                <th>Intensiteit</th>
-                <th>Hartslag</th>
-                <th>Wattage</th>
+                <th>Train Zone</th>
+                <th>Intensity</th>
+                <th>Heart Rate</th>
+                <th>Watt</th>
             </tr>
             <tr>
                 <td>Zone 1</td>
-                <td>Herstel</td>
+                <td>Active recovery</td>
                 <td>-</td>
                 <td>-</td>
             </tr>
             <tr>
                 <td>Zone 2</td>
-                <td>Duurvermogen</td>
+                <td>Endurance</td>
                 <td>-</td>
                 <td>-</td>
             </tr>
@@ -62,7 +71,7 @@
             </tr>
             <tr>
                 <td>Zone 6</td>
-                <td>Anaerobe</td>
+                <td>Anaerobic</td>
                 <td>-</td>
                 <td>-</td>
             </tr>
@@ -77,6 +86,8 @@
         <script>
             document.getElementById("ftp").addEventListener("input", updateFTP);
             document.getElementById("hr").addEventListener("input", updateHR);
+            document.getElementById("weight").addEventListener("input", updatePhysicalCondition);
+            document.getElementById("gender").addEventListener("change", updatePhysicalCondition);
 
             function updateFTP(event) {
                 var ftpTable = document.getElementById("ftpTable");
@@ -105,6 +116,8 @@
                     ftpTable.rows[6].cells[3].innerHTML = "-";
                     ftpTable.rows[7].cells[3].innerHTML = "-";
                 }
+
+                updatePhysicalCondition();
             }
 
             function updateHR(event) {
@@ -132,6 +145,62 @@
                     ftpTable.rows[5].cells[2].innerHTML = "-";
                     ftpTable.rows[6].cells[2].innerHTML = "-";
                     ftpTable.rows[7].cells[2].innerHTML = "-";
+                }
+            }
+
+            function updatePhysicalCondition(event) {
+                const ftpValue = document.getElementById("ftp").value;
+                const weightValue = document.getElementById("weight").value;
+                const genderValue = document.getElementById("gender").value;
+
+                var physicalCondition = document.getElementById("physicalCondition");
+                if (ftpValue !== "" && weightValue !== "" && 0 < weightValue) {
+                    const wattPerKg = ftpValue / weightValue;
+                    var msg = "Watt per kg: " + wattPerKg.toFixed(2) + ".";
+                    if (genderValue == "female") {
+                        if (wattPerKg < 1.7) {
+                            msg += " Physical condition: Very bad.";
+                        } else if (wattPerKg < 2.3) {
+                            msg += " Physical condition: Bad.";
+                        } else if (wattPerKg < 2.8) {
+                            msg += " Physical condition: Untrained.";
+                        } else if (wattPerKg < 3.4) {
+                            msg += " Physical condition: Mediocre.";
+                        } else if (wattPerKg < 4.0) {
+                            msg += " Physical condition: Trained.";
+                        } else if (wattPerKg < 4.6) {
+                            msg += " Physical condition: Regional level.";
+                        } else if (wattPerKg < 5.1) {
+                            msg += " Physical condition: National level.";
+                        } else if (wattPerKg < 5.7) {
+                            msg += " Physical condition: International level.";
+                        } else {
+                            msg += " Physical condition: World class level.";
+                        }
+                    } else {
+                        if (wattPerKg < 1.9) {
+                            msg += " Physical condition: Very bad.";
+                        } else if (wattPerKg < 2.6) {
+                            msg += " Physical condition: Bad.";
+                        } else if (wattPerKg < 3.2) {
+                            msg += " Physical condition: Untrained.";
+                        } else if (wattPerKg < 3.8) {
+                            msg += " Physical condition: Mediocre.";
+                        } else if (wattPerKg < 4.5) {
+                            msg += " Physical condition: Trained.";
+                        } else if (wattPerKg < 5.1) {
+                            msg += " Physical condition: Regional level.";
+                        } else if (wattPerKg < 5.8) {
+                            msg += " Physical condition: National level.";
+                        } else if (wattPerKg < 6.4) {
+                            msg += " Physical condition: International level.";
+                        } else {
+                            msg += " Physical condition: World class level.";
+                        }
+                    }
+                    physicalCondition.innerHTML = msg;
+                } else {
+                    physicalCondition.innerHTML = "";
                 }
             }
         </script>
