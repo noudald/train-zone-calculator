@@ -154,7 +154,10 @@
                 const genderValue = document.getElementById("gender").value;
 
                 var physicalCondition = document.getElementById("physicalCondition");
-                if (ftpValue !== "" && weightValue !== "" && 0 < weightValue) {
+                if (ftpValue !== ""
+                        && weightValue !== ""
+                        && 0 < weightValue
+                        && genderValue !== "") {
                     const wattPerKg = ftpValue / weightValue;
                     var msg = "Watt per kg: " + wattPerKg.toFixed(2) + ".";
                     if (genderValue == "female") {
@@ -165,9 +168,9 @@
                         } else if (wattPerKg < 2.8) {
                             msg += " Physical condition: Untrained.";
                         } else if (wattPerKg < 3.4) {
-                            msg += " Physical condition: Mediocre.";
-                        } else if (wattPerKg < 4.0) {
                             msg += " Physical condition: Trained.";
+                        } else if (wattPerKg < 4.0) {
+                            msg += " Physical condition: Well Trained.";
                         } else if (wattPerKg < 4.6) {
                             msg += " Physical condition: Regional level.";
                         } else if (wattPerKg < 5.1) {
@@ -185,9 +188,9 @@
                         } else if (wattPerKg < 3.2) {
                             msg += " Physical condition: Untrained.";
                         } else if (wattPerKg < 3.8) {
-                            msg += " Physical condition: Mediocre.";
-                        } else if (wattPerKg < 4.5) {
                             msg += " Physical condition: Trained.";
+                        } else if (wattPerKg < 4.5) {
+                            msg += " Physical condition: Well Trained.";
                         } else if (wattPerKg < 5.1) {
                             msg += " Physical condition: Regional level.";
                         } else if (wattPerKg < 5.8) {
