@@ -163,9 +163,9 @@
                     var msg = "Watt per kg: " + wattPerKg.toFixed(2) + ".";
                     if (genderValue == "female") {
                         if (wattPerKg < 1.7) {
-                            msg += " Physical condition: Very bad.";
+                            msg += " Physical condition: Very Poor.";
                         } else if (wattPerKg < 2.3) {
-                            msg += " Physical condition: Bad.";
+                            msg += " Physical condition: Poor.";
                         } else if (wattPerKg < 2.8) {
                             msg += " Physical condition: Untrained.";
                         } else if (wattPerKg < 3.4) {
@@ -173,19 +173,19 @@
                         } else if (wattPerKg < 4.0) {
                             msg += " Physical condition: Well Trained.";
                         } else if (wattPerKg < 4.6) {
-                            msg += " Physical condition: Regional level.";
+                            msg += " Physical condition: Regional Level.";
                         } else if (wattPerKg < 5.1) {
-                            msg += " Physical condition: National level.";
+                            msg += " Physical condition: National Level.";
                         } else if (wattPerKg < 5.7) {
-                            msg += " Physical condition: International level.";
+                            msg += " Physical condition: International Level.";
                         } else {
-                            msg += " Physical condition: World class level.";
+                            msg += " Physical condition: World Class Level.";
                         }
                     } else {
                         if (wattPerKg < 1.9) {
-                            msg += " Physical condition: Very bad.";
+                            msg += " Physical condition: Very Poor.";
                         } else if (wattPerKg < 2.6) {
-                            msg += " Physical condition: Bad.";
+                            msg += " Physical condition: Poor.";
                         } else if (wattPerKg < 3.2) {
                             msg += " Physical condition: Untrained.";
                         } else if (wattPerKg < 3.8) {
@@ -193,13 +193,13 @@
                         } else if (wattPerKg < 4.5) {
                             msg += " Physical condition: Well Trained.";
                         } else if (wattPerKg < 5.1) {
-                            msg += " Physical condition: Regional level.";
+                            msg += " Physical condition: Regional Level.";
                         } else if (wattPerKg < 5.8) {
-                            msg += " Physical condition: National level.";
+                            msg += " Physical condition: National Level.";
                         } else if (wattPerKg < 6.4) {
-                            msg += " Physical condition: International level.";
+                            msg += " Physical condition: International Level.";
                         } else {
-                            msg += " Physical condition: World class level.";
+                            msg += " Physical condition: World Class Level.";
                         }
                     }
                     physicalCondition.innerHTML = msg;
