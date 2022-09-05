@@ -22,8 +22,8 @@
     <body>
 
         <input type="number" id="ftp" placeholder='FTP' size=13 />
-        <input type="number" id="hr" placeholder='FTP Heart Rate' size=13 />
         <input type="number" id="weight" placeholder='Weight (kg)' size=13 />
+        <input type="number" id="age" placeholder='Age' size=13 />
         <select id="gender">
             <option value="" disabled selected>Select your gender</option>
             <option value="female">female</option>
@@ -37,56 +37,48 @@
             <tr>
                 <th>Train Zone</th>
                 <th>Level</th>
-                <th>Heart Rate</th>
                 <th>Watt</th>
             </tr>
             <tr>
                 <td>Zone 1</td>
                 <td>Active recovery</td>
                 <td>-</td>
-                <td>-</td>
             </tr>
             <tr>
                 <td>Zone 2</td>
                 <td>Endurance</td>
-                <td>-</td>
                 <td>-</td>
             </tr>
             <tr>
                 <td>Zone 3</td>
                 <td>Tempo</td>
                 <td>-</td>
-                <td>-</td>
             </tr>
             <tr>
                 <td>Zone 4</td>
                 <td>Threshold</td>
-                <td>-</td>
                 <td>-</td>
             </tr>
             <tr>
                 <td>Zone 5</td>
                 <td>VO2max</td>
                 <td>-</td>
-                <td>-</td>
             </tr>
             <tr>
                 <td>Zone 6</td>
                 <td>Anaerobic</td>
-                <td>-</td>
                 <td>-</td>
             </tr>
             <tr>
                 <td>Zone 7</td>
                 <td>Neuromusculair</td>
                 <td>-</td>
-                <td>-</td>
             </tr>
         </table>
 
         <script>
             document.getElementById("ftp").addEventListener("input", updateFTP);
-            document.getElementById("hr").addEventListener("input", updateHR);
+            document.getElementById("age").addEventListener("input", updatePhysicalCondition);
             document.getElementById("weight").addEventListener("input", updatePhysicalCondition);
             document.getElementById("gender").addEventListener("change", updatePhysicalCondition);
 
@@ -101,43 +93,13 @@
                     const zone5 = Math.floor(1.20 * this.value);
                     const zone6 = Math.floor(2.85 * this.value);
 
-                    ftpTable.rows[1].cells[3].innerHTML = "< " + zone1;
-                    ftpTable.rows[2].cells[3].innerHTML = zone1 + " - " + zone2;
-                    ftpTable.rows[3].cells[3].innerHTML = zone2 + " - " + zone3;
-                    ftpTable.rows[4].cells[3].innerHTML = zone3 + " - " + zone4;
-                    ftpTable.rows[5].cells[3].innerHTML = zone4 + " - " + zone5;
-                    ftpTable.rows[6].cells[3].innerHTML = zone5 + " - " + zone6;
-                    ftpTable.rows[7].cells[3].innerHTML = "> " + zone6;
-                } else {
-                    ftpTable.rows[1].cells[3].innerHTML = "-";
-                    ftpTable.rows[2].cells[3].innerHTML = "-";
-                    ftpTable.rows[3].cells[3].innerHTML = "-";
-                    ftpTable.rows[4].cells[3].innerHTML = "-";
-                    ftpTable.rows[5].cells[3].innerHTML = "-";
-                    ftpTable.rows[6].cells[3].innerHTML = "-";
-                    ftpTable.rows[7].cells[3].innerHTML = "-";
-                }
-
-                updatePhysicalCondition();
-            }
-
-            function updateHR(event) {
-                var ftpTable = document.getElementById("ftpTable");
-
-                if (this.value) {
-                    const zone0 = Math.floor(0.60 * this.value);
-                    const zone1 = Math.floor(0.74 * this.value);
-                    const zone2 = Math.floor(0.84 * this.value);
-                    const zone3 = Math.floor(0.94 * this.value);
-                    const zone4 = Math.floor(1.00 * this.value);
-
-                    ftpTable.rows[1].cells[2].innerHTML = zone0 + " - " + zone1;
+                    ftpTable.rows[1].cells[2].innerHTML = "< " + zone1;
                     ftpTable.rows[2].cells[2].innerHTML = zone1 + " - " + zone2;
                     ftpTable.rows[3].cells[2].innerHTML = zone2 + " - " + zone3;
                     ftpTable.rows[4].cells[2].innerHTML = zone3 + " - " + zone4;
-                    ftpTable.rows[5].cells[2].innerHTML = "> " + zone4;
-                    ftpTable.rows[6].cells[2].innerHTML = "nvt";
-                    ftpTable.rows[7].cells[2].innerHTML = "nvt";
+                    ftpTable.rows[5].cells[2].innerHTML = zone4 + " - " + zone5;
+                    ftpTable.rows[6].cells[2].innerHTML = zone5 + " - " + zone6;
+                    ftpTable.rows[7].cells[2].innerHTML = "> " + zone6;
                 } else {
                     ftpTable.rows[1].cells[2].innerHTML = "-";
                     ftpTable.rows[2].cells[2].innerHTML = "-";
@@ -147,6 +109,8 @@
                     ftpTable.rows[6].cells[2].innerHTML = "-";
                     ftpTable.rows[7].cells[2].innerHTML = "-";
                 }
+
+                updatePhysicalCondition();
             }
 
             function updatePhysicalCondition(event) {
