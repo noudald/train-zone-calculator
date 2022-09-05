@@ -115,15 +115,15 @@
 
             function updatePhysicalCondition(event) {
                 const ftpValue = document.getElementById("ftp").value;
-                const weightValue = document.getElementById("weight").value;
+                const ageValue = document.getElementById("age").value;
                 const genderValue = document.getElementById("gender").value;
 
                 var physicalCondition = document.getElementById("physicalCondition");
                 if (ftpValue !== ""
-                        && weightValue !== ""
-                        && 0 < weightValue
+                        && ageValue !== ""
+                        && 0 < ageValue
                         && genderValue !== "") {
-                    const wattPerKg = ftpValue / weightValue;
+                    const wattPerKg = ftpValue / ageValue;
                     var msg = "Watt per kg: " + wattPerKg.toFixed(2) + ".";
                     if (genderValue == "female") {
                         if (wattPerKg < 1.7) {
