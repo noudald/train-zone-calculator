@@ -370,7 +370,9 @@
                     const wattPerKg = ftpValue / weightValue;
                     var msg = "Watt per kg: " + wattPerKg.toFixed(2) + ".";
                     const level = getWattPerKilogramMaxConditionLevel(wattPerKg, ageValue, genderValue);
-                    msg += " Physical condition level: " + level + " out of 7";
+                    if (typeof level !== "undefined") {
+                        msg += " Physical condition level: " + level + " out of 7";
+                    }
                     physicalCondition.innerHTML = msg;
 
                     plotProgressionBar(wattPerKg, ageValue, genderValue);
