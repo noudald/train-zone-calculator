@@ -353,6 +353,10 @@
                 }
             }
 
+            function estimateVO2Max(ftp) {
+                return ftp / 0.072;
+            }
+
             function updatePhysicalCondition(event) {
                 const ftpValue = document.getElementById("ftp").value;
                 const weightValue = document.getElementById("weight").value;
@@ -368,12 +372,27 @@
                         && 0 < weightValue
                         && genderValue !== "") {
                     const wattPerKg = ftpValue / weightValue;
-                    var msg = "Watt per kg: " + wattPerKg.toFixed(2) + ".";
-                    const level = getWattPerKilogramMaxConditionLevel(wattPerKg, ageValue, genderValue);
-                    if (typeof level !== "undefined") {
-                        msg += " Physical condition level: " + level + " out of 7";
-                    }
-                    physicalCondition.innerHTML = msg;
+                    const vo2Max = estimateVO2Max(wattPerKg);
+                    const conditionLevel = getWattPerKilogramMaxConditionLevel(wattPerKg, ageValue, genderValue);
+
+                    var resultTable = `<table id="resultTable">
+                            <tr>
+                                <td>Watt per kg:</td>
+                                <td>${wattPerKg.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td>Estimated VO2max:</td>
+                                <td>${vo2Max.toFixed(1)}</td>
+                            </tr>
+                            <tr>
+                                <td>Condition level</td>
+                                <td>${conditionLevel}</td>
+                            </tr>
+                        </table>`;
+                    //if (typeof level !== "undefined") {
+                    //    msg += "Fitness level: " + level + " out of 7";
+                    //}
+                    physicalCondition.innerHTML = resultTable;
 
                     plotProgressionBar(wattPerKg, ageValue, genderValue);
                 } else {
