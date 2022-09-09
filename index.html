@@ -5,77 +5,110 @@
             table {
                 font-family: arial, sans-serif;
                 border-collapse: collapse;
-                width: 618px;
             }
 
-            td, th {
+            #container {
+                display: flex;
+                flex-direction: column;
+                width: 800;
+                margin: 0 auto;
+            }
+
+            #inputField {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+            }
+
+            input {
+                width: 100%;
+                margin-right: 1%;
+            }
+
+            select {
+                width: 100%;
+            }
+
+            #resultTable {
+                width: 40%;
+            }
+
+            #ftpTable {
+                width: 100%;
+            }
+
+            #ftpTable td, th {
                 border: 1px solid #dddddd;
                 text-align: left;
                 padding: 8px;
             }
 
-            tr:nth-child(even) {
+            #ftpTable tr:nth-child(even) {
                 background-color: #eeeeee;
             }
         </style>
     </head>
     <body>
 
-        <input type="number" id="ftp" placeholder='FTP' size=13 />
-        <input type="number" id="weight" placeholder='Weight (kg)' size=13 />
-        <input type="number" id="age" placeholder='Age' size=13 />
-        <select id="gender">
-            <option value="" disabled selected>Select your gender</option>
-            <option value="female">female</option>
-            <option value="male">male</option>
-            <option value="other">other</option>
-        </select>
+        <div id="container">
+            <div id="inputField">
+                <input type="number" id="ftp" placeholder='FTP' size=13 />
+                <input type="number" id="weight" placeholder='Weight (kg)' size=13 />
+                <input type="number" id="age" placeholder='Age' size=13 />
+                <select id="gender">
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="female">female</option>
+                    <option value="male">male</option>
+                    <option value="other">other</option>
+                </select>
+            </div>
 
-        <p id="physicalCondition"></p>
-        <canvas id="progressionBar" height="0"></canvas>
+            <p id="physicalCondition"></p>
+            <canvas id="progressionBar" height="0"></canvas>
 
-        <table id='ftpTable'>
-            <tr>
-                <th>Train Zone</th>
-                <th>Level</th>
-                <th>Watt</th>
-            </tr>
-            <tr>
-                <td>Zone 1</td>
-                <td>Active recovery</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Zone 2</td>
-                <td>Endurance</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Zone 3</td>
-                <td>Tempo</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Zone 4</td>
-                <td>Threshold</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Zone 5</td>
-                <td>VO2max</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Zone 6</td>
-                <td>Anaerobic</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Zone 7</td>
-                <td>Neuromusculair</td>
-                <td>-</td>
-            </tr>
-        </table>
+            <table id='ftpTable'>
+                <tr>
+                    <th>Train Zone</th>
+                    <th>Level</th>
+                    <th>Watt</th>
+                </tr>
+                <tr>
+                    <td>Zone 1</td>
+                    <td>Active recovery</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Zone 2</td>
+                    <td>Endurance</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Zone 3</td>
+                    <td>Tempo</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Zone 4</td>
+                    <td>Threshold</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Zone 5</td>
+                    <td>VO2max</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Zone 6</td>
+                    <td>Anaerobic</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Zone 7</td>
+                    <td>Neuromusculair</td>
+                    <td>-</td>
+                </tr>
+            </table>
+        </div>
 
         <script>
             document.getElementById("ftp").addEventListener("input", updateFTP);
@@ -300,10 +333,12 @@
 
             function plotProgressionBar(wattPerKg, age, gender) {
                 const progressionBar = document.getElementById("progressionBar");
+                const container = document.getElementById("container");
+                console.log(container.offsetWidth);
 
                 if (progressionBar.getContext) {
                     const ctx = progressionBar.getContext('2d');
-                    const barWidth = 560/7;
+                    const barWidth = (container.offsetWidth - 40)/7;
 
                     const wattPerKgTable = wattPerKilogramConditionTable.filter((arr) => {
                         return arr[0] == gender && arr[1] <= age && age < arr[2];
@@ -315,11 +350,12 @@
                         progressionBar.height = 0;
                         return;
                     } else {
-                        progressionBar.width = 600;
+                        progressionBar.width = container.offsetWidth;
                         progressionBar.height = 60;
                     }
 
                     ctx.lineWidth = 3;
+                    ctx.font = "14px Arial";
 
                     const colorPalette = ["#3288bd", "#99d594", "#e6f598", "#ffff00", "#fee08b", "#fc8d59", "#d53e4f"];
                     var progressionPosition = 20;
@@ -378,20 +414,17 @@
                     var resultTable = `<table id="resultTable">
                             <tr>
                                 <td>Watt per kg:</td>
-                                <td>${wattPerKg.toFixed(2)}</td>
+                                <td>${wattPerKg.toFixed(2)} w/kg</td>
                             </tr>
                             <tr>
                                 <td>Estimated VO2max:</td>
-                                <td>${vo2Max.toFixed(1)}</td>
+                                <td>${vo2Max.toFixed(1)} ml/kg/min</td>
                             </tr>
                             <tr>
-                                <td>Condition level</td>
-                                <td>${conditionLevel}</td>
+                                <td>Condition level:</td>
+                                <td>${conditionLevel} out of 7</td>
                             </tr>
                         </table>`;
-                    //if (typeof level !== "undefined") {
-                    //    msg += "Fitness level: " + level + " out of 7";
-                    //}
                     physicalCondition.innerHTML = resultTable;
 
                     plotProgressionBar(wattPerKg, ageValue, genderValue);
