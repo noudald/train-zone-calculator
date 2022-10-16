@@ -46,6 +46,31 @@
             #ftpTable tr:nth-child(even) {
                 background-color: #eeeeee;
             }
+
+            #exampleWorkouts {
+                display: none;
+            }
+
+            #workoutEndurance {
+                display: none;
+            }
+
+            #workoutSweetSport {
+                display: none;
+            }
+
+            #workoutSprint {
+                display: none;
+            }
+
+            #workoutTreshold {
+                display: none;
+            }
+
+            #workoutVO2max {
+                display: none;
+            }
+
         </style>
     </head>
     <body>
@@ -108,7 +133,30 @@
                     <td>-</td>
                 </tr>
             </table>
+
+            <div id="exampleWorkouts">
+                <h2>Example workout(s)</h2>
+                <p id="workoutMessage"></p>
+
+                <div id="workoutEndurance">
+                    <h3>Endurance workout</h3>
+                    <p>
+                        Ride between
+                            <span class="enduranceTimeMin"></span> and <span class="enduranceTimeMax"></span>
+                        hours in zone 2
+                            (<span class="zone2Min"></span>W - <span class="zone2Max"></span>W).
+                    </p>
+                </div>
+
+                <div id="workoutTempo">
+                    <h3>Tempo workout</h3>
+                    <p>Warmup for 15 minutes in Zone 1 (below <span class="zone1Max"></span>W).</p>
+                    <p>Ride 3 x 8 minutes in Zone 3 (<span class="zone3Min"></span>W - <span class="zone3Max"></span>W) with 5 minutes rest in Zone 1 (below <span class="zone1Max"></span>W)</p>
+                </div>
+
+            </div>
         </div>
+
 
         <script>
             document.getElementById("ftp").addEventListener("input", updateFTP);
@@ -459,13 +507,64 @@
                     physicalCondition.innerHTML = resultTable;
 
                     plotProgressionBar(wattPerKg, ageValue, genderValue);
+                    createExampleWorkouts(conditionLevel, ftpValue);
                 } else {
                     physicalCondition.innerHTML = "";
 
                     const progressionBar = document.getElementById("progressionBar");
                     progressionBar.height = 0;
+
+                    const exampleWorkouts = document.getElementById("exampleWorkouts");
+                    exampleWorkouts.style.display = "none";
                 }
             }
+
+            function createExampleWorkouts(conditionLevel, ftpValue) {
+                const exampleWorkouts = document.getElementById("exampleWorkouts");
+
+                const workoutEndurance = document.getElementById("workoutEndurance");
+                const workoutTempo = document.getElementById("workoutTempo");
+
+                exampleWorkouts.style.display = "block";
+
+                // Endurance training for all condition levels.
+                workoutEndurance.style.display = "block";
+                const enduranceTime = {
+                    1: [0.5, 1.0],
+                    2: [0.5, 1.5],
+                    3: [0.5, 2.0],
+                    4: [0.5, 2.5],
+                    5: [1.0, 3.0],
+                    6: [1.0, 3.5],
+                    7: [1.0, 4.0]
+                }
+
+                if (conditionLevel == 2) {
+                    workoutTempo.style.display = "block";
+                } else {
+                    workoutTempo.style.display = "none";
+                }
+
+                document.getElementsByClassName("enduranceTimeMin")[0].innerHTML = enduranceTime[conditionLevel][0];
+                document.getElementsByClassName("enduranceTimeMax")[0].innerHTML = enduranceTime[conditionLevel][1];
+
+                Array.from(document.getElementsByClassName("zone1Max")).forEach(
+                    elm => elm.innerHTML = Math.floor(0.55 * ftpValue)
+                );
+                Array.from(document.getElementsByClassName("zone2Min")).forEach(
+                    elm => elm.innerHTML = Math.floor(0.55 * ftpValue)
+                );
+                Array.from(document.getElementsByClassName("zone2Max")).forEach(
+                    elm => elm.innerHTML = Math.floor(0.75 * ftpValue)
+                );
+                Array.from(document.getElementsByClassName("zone3Min")).forEach(
+                    elm => elm.innerHTML = Math.floor(0.75 * ftpValue)
+                );
+                Array.from(document.getElementsByClassName("zone3Max")).forEach(
+                    elm => elm.innerHTML = Math.floor(0.90 * ftpValue)
+                );
+            }
+
         </script>
 
     </body>
