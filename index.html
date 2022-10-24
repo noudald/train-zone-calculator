@@ -262,13 +262,13 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td>3 x (10 sec sprint + 3 min active recovery)</td>
+                            <td>4 x (10 sec sprint + 3 min active recovery)</td>
                             <td>Sprint</td>
                             <td>Build up to <span class="sprintMin"></span>W</td>
                         </tr>
                         <tr>
                             <td>Main set</td>
-                            <td>6 x (30 sec sprint + 3 min active recovery)</td>
+                            <td>6 x (10 sec sprint + 3 min active recovery)</td>
                             <td>Sprint</td>
                             <td>Above <span class="sprintMin"></span>W</td>
                         </tr>
@@ -739,7 +739,7 @@
                     );
                 } else if (conditionLevel > 3) {
                     Array.from(document.getElementsByClassName("sprintMin")).forEach(
-                        elm => elm.innerHTML = Math.floor(1.20 * ftpValue)
+                        elm => elm.innerHTML = Math.floor(2.85 * ftpValue)
                     );
                 }
 
